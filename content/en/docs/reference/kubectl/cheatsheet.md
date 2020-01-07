@@ -181,7 +181,7 @@ kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="ExternalIP
 # List Names of Pods that belong to Particular RC
 # "jq" command useful for transformations that are too complex for jsonpath, it can be found at https://stedolan.github.io/jq/
 sel=${$(kubectl get rc my-rc --output=json | jq -j '.spec.selector | to_entries | .[] | "\(.key)=\(.value),"')%?}
-echo $(kubectl get pods --selector=$sel --output=jsonpath={.items..metadata.name})
+echo $(kubectl get pods --selector=$sel --output=jsonpath={.items.metadata.name})
 
 # Show labels for all pods (or any other Kubernetes object that supports labelling)
 kubectl get pods --show-labels
